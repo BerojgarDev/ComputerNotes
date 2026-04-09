@@ -1,5 +1,7 @@
 /* ================= RESET ================= */
-* {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -21,33 +23,79 @@
     font-style: normal;
 }
 
-/* ==================================================
-   ROOT VARIABLES
-================================================== */
+/* ================= VARIABLES ================= */
 :root {
     --font-main: 'Playpen Sans', sans-serif;
-
     --bg: #f9f9f9;
     --text: #333;
-
     --primary: #0077cc;
     --primary-dark: #005fa3;
-
     --accent: #28a745;
     --accent-hover: #218838;
-
     --card-bg: #ffffff;
     --border: #ddd;
-
+    --shadow: rgba(0, 0, 0, 0.05);
     --radius: 10px;
+    --transition: 0.3s ease;
+}
+
+/* 🌙 DARK MODE */
+body.dark-mode {
+    --bg: #121212;
+    --text: #e0e0e0;
+    --card-bg: #1e1e1e;
+    --border: #333;
+    --primary: #4dabf7;
+    --accent: #51cf66;
+    --shadow: rgba(0, 0, 0, 0.4);
 }
 
 /* ================= GLOBAL ================= */
 body {
     font-family: var(--font-main);
-    background: var(--bg);
+    background: linear-gradient(to bottom, var(--bg), #f0f0f0);
     color: var(--text);
-    line-height: 1.6;
+    line-height: 1.7;
+    transition: background 0.4s ease, color 0.4s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    margin-bottom: 0.5em;
+}
+
+p {
+    margin-bottom: 1em;
+}
+
+html {
+    font-size: 16px;
+}
+
+/* Headings */
+h1 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+h2 {
+    font-size: clamp(1.6rem, 3vw, 2.2rem);
+}
+
+h3 {
+    font-size: clamp(1.4rem, 2.5vw, 1.8rem);
+}
+
+h4 {
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+}
+
+/* Body text */
+p,
+li {
+    font-size: clamp(1.05rem, 1.5vw, 1.2rem);
+    line-height: 1.8;
 }
 
 /* ================= HEADER ================= */
@@ -68,53 +116,42 @@ header {
 
 .logo a {
     display: flex;
-    /* Use flexbox for alignment */
     align-items: center;
-    /* Vertically center image and text */
     text-decoration: none;
-    /* Remove underline from the link */
     color: inherit;
-    /* Inherit text color if desired */
     flex-wrap: wrap;
-    /* Allow items to wrap on smaller screens */
 }
 
 .logo img {
     max-width: 100px;
-    /* Set a reasonable maximum size for the logo image */
-    height: auto;
-    /* Maintain aspect ratio */
-    margin-right: 10px;
-    /* Space between the image and the text */
-    /* For full responsiveness where the image scales with the viewport width: */
     width: 100%;
-    max-width: 100px;
     border-radius: 25px;
 }
 
-/*
-.logo h1 {
-    font-size: 1.5rem;
-    /* Use relative font units (rem or em) 
-    margin: 0;
-    /* Remove default margin for h1 
+/* ================= NAV ================= */
+.nav-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 20px;
 }
-*/
+
 nav ul {
     list-style: none;
     display: flex;
-    gap: 10px;
+    gap: 8px;
 }
 
-nav ul li a {
+nav ul li a,
+.nav-wrapper a {
     color: white;
     text-decoration: none;
     padding: 0.7rem 1rem;
     border-radius: var(--radius);
-    transition: 0.3s;
+    transition: var(--transition);
 }
 
-nav ul li a:hover {
+nav ul li a:hover,
+.nav-wrapper a:hover {
     background: #04AA6D;
 }
 
@@ -143,6 +180,12 @@ nav ul li a:hover {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
 }
 
+.heroContainer,
+.unitList {
+    max-width: 1000px;
+    margin: auto;
+}
+
 .heroContainer h2 {
     margin: 10px;
 }
@@ -162,77 +205,100 @@ nav ul li a:hover {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: white;
-    padding: 12px 16px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    background: var(--card-bg);
+    padding: 14px 18px;
+    border-radius: var(--radius);
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px var(--shadow);
+    transition: var(--transition);
 }
 
 .unit:hover {
-    background: #f5f5f5;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px var(--shadow);
 }
 
-/* ================= LIST ================= */
-.list ol {
-    margin-top: 1rem;
+section {
+    margin-bottom: 2rem;
 }
 
-.list li {
-    margin-bottom: 1.5rem;
+.unitList h2 {
+    margin-bottom: 1rem;
+}
+
+.unit {
+    margin-bottom: 0.8rem;
+}
+
+.noteContent {
+    margin-top: 0.5rem;
+}
+
+.unit,
+button,
+a {
+    transition: all 0.25s ease;
+}
+
+.unit {
+    border: 1px solid var(--border);
+}
+
+a:hover {
+    transform: translateY(-1px);
 }
 
 /* ================= BUTTON ================= */
 .unitList button {
-    background-color: #04AA6D;
-    /* Green background */
-    border: none;
-    /* Remove default border */
+    background-color: var(--accent);
     color: white;
-    /* White text */
-    padding: 8px 16px;
-    /* Some padding */
-    text-align: center;
-    /* Center the text */
-    text-decoration: none;
-    /* Remove underlines */
-    display: inline-block;
+    border: none;
+    padding: 10px 18px;
     font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    /* Change mouse to pointer on hover */
     border-radius: 8px;
-    /* Rounded corners */
-    transition: background-color 0.3s;
-    /* Smooth transition for hover effect */
+    cursor: pointer;
+    transition: var(--transition);
+    font-weight: 500;
+    letter-spacing: 0.3px;
 }
 
 .unitList button:hover {
     background-color: #008CBA;
-    /* Blue background on hover */
     transform: translateY(-2px);
 }
 
+/* ================= NOTE ================= */
 .noteContent {
     display: none;
+    overflow: hidden;
+    transition: max-height 0.4s ease, padding 0.4s ease;
+    background: var(--card-bg);
+    border-left: 4px solid var(--primary);
+    border-radius: var(--radius);
 }
 
 .noteContent.show {
     display: block;
-}
-
-.noteContent.show {
     padding: 15px;
     margin-bottom: 15px;
-    background: #fafafa;
+    background: var(--card-bg);
     border-left: 4px solid var(--primary);
     border-radius: 8px;
+}
+
+.noteContent {
+    line-height: 1.8;
+}
+
+.noteContent {
+    max-width: 70ch;
 }
 
 /* ================= CUSTOM LIST ================= */
 .hyphen-list {
     list-style: none;
     padding-left: 0;
+    font-size: 20px;
 }
 
 .hyphen-list>li {
@@ -241,10 +307,28 @@ nav ul li a:hover {
 }
 
 .hyphen-list>li::before {
-    content: "- ";
+    content: "-";
     position: absolute;
     left: 0;
     color: var(--primary);
+}
+
+/* ================= ORDERED LIST ================= */
+ol {
+    padding-left: 1.5rem;
+    margin: 1rem 0;
+}
+
+ol li {
+    margin-bottom: 0.6rem;
+    line-height: 1.8;
+}
+
+/* Nested lists */
+ol li ol,
+ol li ul {
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
 }
 
 /* ================= CONTENT ================= */
@@ -252,14 +336,7 @@ nav ul li a:hover {
     padding: 2rem;
 }
 
-/* ================= FOOTER ================= */
-footer {
-    text-align: center;
-    background: #333;
-    color: white;
-    padding: 1rem;
-    margin-top: 2rem;
-}
+
 
 .math-ladder {
     border-collapse: collapse;
@@ -347,4 +424,140 @@ footer {
     border-right: 8px solid transparent;
     border-top: 12px solid black;
     /* Points down */
+}
+
+/* Mobile adjustment: dark-mode toggle + hamburger in same row */
+@media (max-width: 576px) {
+    .nav-wrapper {
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .dark-mode-toggle {
+        margin: 0;
+    }
+}
+
+/* ================= FOOTER ================= */
+footer {
+    text-align: center;
+    background: #222;
+    color: white;
+    padding: 1.2rem;
+    margin-top: 3rem;
+}
+
+/* ================= SCROLL TO TOP ================= */
+#scrollToTop {
+    position: fixed;
+    right: 25px;
+    bottom: 25px;
+    font-size: 32px;
+    opacity: 0.65;
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 100;
+}
+
+#scrollToTop:hover {
+    opacity: 1;
+    transform: scale(1.15);
+}
+
+/* ================= DARK MODE TOGGLE ================= */
+.dark-mode-toggle {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.dark-mode-toggle svg {
+    width: 24px;
+    height: 24px;
+}
+
+.icon-moon {
+    display: none;
+}
+
+body.dark-mode .icon-sun {
+    display: none;
+}
+
+body.dark-mode .icon-moon {
+    display: block;
+}
+
+/* ================= HAMBURGER & RESPONSIVE ================= */
+.hamburger {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+    }
+
+    .nav-wrapper {
+        justify-content: space-between;
+    }
+
+    .unit {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    nav ul,
+    .nav {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: black;
+        padding: 15px;
+    }
+
+    nav ul.active,
+    .nav.active {
+        display: flex;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .hero,
+    .content {
+        padding: clamp(1rem, 3vw, 2.5rem);
+    }
+}
+
+@media (max-width: 576px) {
+
+    .unitList button {
+        width: 100%;
+        text-align: center;
+    }
+
+    .unit {
+        padding: 12px;
+    }
+}
+
+@media (max-width: 576px) {
+    html {
+        font-size: 17px;
+    }
+
+    p,
+    li {
+        font-size: 1.05rem;
+    }
 }
